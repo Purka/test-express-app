@@ -1,0 +1,7 @@
+
+\.idea/
+
+node_modules/
+config/db.js
+
+package-lock\.json
