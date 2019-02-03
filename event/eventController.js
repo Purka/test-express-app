@@ -39,20 +39,18 @@ router.post('/', (req, res) => {
 
 router.get('/', (req, res) => {
     checkAuth(req, res, userId => {
-        Event.paginate({}, { page: 1, limit: 10 }, (err, events) => {
+
+        let filter = { id: userId};
+        if(req.body.date) filter.date = req.body.date
+
+        Event.paginate(filter, { page: 1, limit: 10 }, (err, events) => {
             if (err) {
                 return res.status(500).send({
                     success: false,
                     message: 'There was a problem finding the events.'
                 });
             }
-            let userEvents = helpers.showOnlyMyEvents(events.docs, userId);
-            //filter events by user's choice
-            let filtered = userEvents.filter((event) => {
-                return dateFormat(event.date) === dateFormat(req.body.date);
-            });
-
-            res.status(200).send(filtered);
+            res.status(200).send(events.docs);
         });
     });
 });
