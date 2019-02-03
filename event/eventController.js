@@ -1,9 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const bodyParser = require('body-parser');
-const isValidDate = require('is-valid-date');
-const checkAuth = require('../auth/checkAuth');
 const dateFormat = require('dateformat');
+const validateEvent = require('./helpers').validateEvent;
+const showOnlyMyEvents = require('./helpers').showOnlyMyEvents;
+const checkAuth = require('../auth/checkAuth');
 const Event = require('./Event');
 const User = require('../user/User');
 
@@ -32,7 +33,7 @@ router.get('/', (req, res) => {
         Event.paginate({}, { page: 1, limit: 10 }, (err, events) => {
             if (err) return res.status(500).send('There was a problem finding the events.');
             let userEvents = showOnlyMyEvents(events.docs, userId);
-            // filter events by user's choice
+            //filter events by user's choice
             let filtered = userEvents.filter((event) => {
                 return dateFormat(event.date) === dateFormat(req.body.date);
             });
@@ -60,6 +61,7 @@ router.put('/:id', (req, res) => {
 });
 
 router.delete('/:id', (req, res) => {
+    console.log(req.params.id);
     checkAuth(req, res, () => {
         Event.findByIdAndRemove(req.params.id, (err, event) => {
             if (err) return res.status(500).send('There was a problem deleting the event.');
@@ -69,22 +71,3 @@ router.delete('/:id', (req, res) => {
 });
 
 module.exports = router;
-
-
-const showOnlyMyEvents = (events, userId) => {
-    let eventsArr = []
-    events.forEach(event => {
-        if(event.id === userId) {
-            eventsArr.push(event);
-        }
-    });
-    return eventsArr;
-}
-
-
-const validateEvent = (event) => {
-    if(!event.title) throw new Error('Event title is required');
-    if(!event.text) throw new Error('Event text is required');
-    if(!event.date) throw new Error('Eevnt date is required');
-    if(!isValidDate(event.date)) throw new Error('Event date is invalid');
-}
