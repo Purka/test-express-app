@@ -15,7 +15,7 @@ router.get('/', (req, res) => {
 });
 
 router.get('/:id', (req, res) => {
-    User.findById(req.params.id, { password: 0 }, function (err, user) {
+    User.findById(req.params.id, { password: 0 }, (err, user) => {
         if (err) return res.status(500).send('There was a problem finding the user.');
         if (!user) return res.status(404).send('No user found.');
         res.status(200).send(user);

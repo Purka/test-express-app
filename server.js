@@ -6,7 +6,7 @@ const port = 8000;
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-const server = app.listen(port, function() {
+const server = app.listen(port, () => {
     console.log('Express server listening on port ' + port);
 });
 
