@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const bodyParser = require('body-parser');
-const dateFormat = require('dateformat');
 const helpers = require('./helpers');
 const checkAuth = require('../auth/checkAuth');
 const Event = require('./Event');
@@ -11,6 +10,7 @@ router.use(bodyParser.urlencoded({ extended: true }));
 router.use(bodyParser.json());
 
 router.post('/', (req, res) => {
+    // TODO: figure out or ask someone how to take out checkAuth()
     checkAuth(req, res, userId => {
         const event = {
             title: req.body.title,
@@ -39,9 +39,11 @@ router.post('/', (req, res) => {
 
 router.get('/', (req, res) => {
     checkAuth(req, res, userId => {
+        let filter = { id: userId };
 
-        let filter = { id: userId};
-        if(req.body.date) filter.date = req.body.date
+        if(req.body.date) {
+            filter.date = req.body.date
+        }
 
         Event.paginate(filter, { page: 1, limit: 10 }, (err, events) => {
             if (err) {
