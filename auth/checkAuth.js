@@ -1,7 +1,7 @@
 let jwt = require('jsonwebtoken');
 const config = require('../config/config.js');
 
-module.exports = checkToken = (req, res, next) => {
+module.exports = checkAuth = (req, res, next) => {
     let token = req.headers['x-access-token'] || req.headers['authorization'];
     if (token.startsWith('Bearer ')) {
         // Remove Bearer from string
@@ -11,19 +11,21 @@ module.exports = checkToken = (req, res, next) => {
     if (token) {
         jwt.verify(token, config.secret, (err, decoded) => {
             if (err) {
-                return res.json({
+                return res.send({
                     success: false,
                     message: 'Token is not valid'
                 });
             } else {
                 req.decoded = decoded;
-                next();
+                req.userId = decoded.id;
+                next(decoded.id);
             }
         });
     } else {
-        return res.json({
+        return res.send({
             success: false,
             message: 'Auth token is not supplied'
         });
     }
 };
+
