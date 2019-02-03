@@ -1,8 +1,10 @@
 # test-for-fluvius
 
 Before you start add a database link to /config/db.js file.
+
 It should be on the first line in the url variable.
-Use the following example:
+
+You may use the following example:
 
 ```mongodb://user:password.mlab.com:number/db-name```
 
