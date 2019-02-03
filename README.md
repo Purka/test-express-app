@@ -4,4 +4,4 @@ To start the server do:
 
 ```npm run dev```
 
-To test application use Postman
+To test application use postman-collection.json in Postman 
