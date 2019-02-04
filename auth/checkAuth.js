@@ -16,7 +16,6 @@ module.exports = checkAuth = (req, res, next) => {
                 });
             } else {
                 req.decoded = decoded;
-                req.userId = decoded.id;
                 next();
             }
         });
