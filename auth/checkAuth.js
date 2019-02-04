@@ -4,7 +4,6 @@ const config = require('../config/config.js');
 module.exports = checkAuth = (req, res, next) => {
     let token = req.headers['x-access-token'] || req.headers['authorization'];
     if (token.startsWith('Bearer ')) {
-        // Remove Bearer from string
         token = token.slice(7, token.length);
     }
 
@@ -18,7 +17,7 @@ module.exports = checkAuth = (req, res, next) => {
             } else {
                 req.decoded = decoded;
                 req.userId = decoded.id;
-                next(decoded.id);
+                next();
             }
         });
     } else {
