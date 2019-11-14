@@ -1,3 +1,5 @@
+'use strict';
+
 const mongoose = require('mongoose');
 
 const UserSchema = new mongoose.Schema({
@@ -9,6 +11,10 @@ const UserSchema = new mongoose.Schema({
         trim: true
     },
     password: {
+        type: String,
+        required: true,
+    },
+    salt: {
         type: String,
         required: true,
     },

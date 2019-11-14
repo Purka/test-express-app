@@ -1,10 +1,14 @@
-const url = 'Add here your db link';
+const url = 'mongodb://<user>:<password>.mlab.com:<number>/<dbname>';
 const mongoose = require('mongoose');
 
-mongoose.connect(url, { useNewUrlParser: true });
-
-module.exports = {
-    url: url,
+const main = async () => {
+    try {
+        mongoose.set('useFindAndModify', false);
+        await mongoose.connect(url, { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true });
+    } catch (err) {
+        return console.log(err)
+    }
 }
 
+main()
 

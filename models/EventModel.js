@@ -1,3 +1,5 @@
+'use strict';
+
 const mongoose = require('mongoose');
 const mongoosePaginate = require('mongoose-paginate');
 
@@ -5,7 +7,7 @@ const EventSchema = new mongoose.Schema({
     title: String,
     text: String,
     date: Date,
-    id: String
+    owner: String
 });
 
 EventSchema.plugin(mongoosePaginate);
