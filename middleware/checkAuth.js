@@ -25,6 +25,7 @@ module.exports.checkAuth = (req, res, next) => {
                 });
             } else {
                 req.decoded = decoded.email;
+                req.decodedId = decoded.id;
                 next();
             }
         });

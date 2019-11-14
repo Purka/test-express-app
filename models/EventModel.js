@@ -7,7 +7,7 @@ const EventSchema = new mongoose.Schema({
     title: String,
     text: String,
     date: Date,
-    id: String
+    owner: String
 });
 
 EventSchema.plugin(mongoosePaginate);

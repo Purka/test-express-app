@@ -60,7 +60,7 @@ module.exports.login = async (req, res, next) => {
             }
             // generate a signed son web token with the contents of user object and return it in the response
             let secret = new Buffer(config.get("jwt_secret"), "base64");
-            let token = jwt.sign({ "email": user.email }, secret, { algorithm: "HS256", expiresIn: "60000s" });
+            let token = jwt.sign({ "email": user.email, "id": user._id }, secret, { algorithm: "HS256", expiresIn: "60000s" });
             return res.json({ token });
         });
     })(req, res);
