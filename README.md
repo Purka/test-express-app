@@ -1,4 +1,4 @@
-# test-for-fluvius
+# test-express-app
 
 Before you start add a database link to /config/db.js file.
 
@@ -10,6 +10,5 @@ You may use the following example:
 
 To start the server do:
 
-```npm run dev```
+```npm run start```
 
-To test application use postman-collection.json in Postman
