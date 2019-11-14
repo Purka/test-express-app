@@ -1,3 +1,3 @@
 module.exports = {
-    secret: 'worldisfullofdevelopers'
+    jwt_secret: 'placeholderforsecret'
 };

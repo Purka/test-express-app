@@ -1,0 +1,8 @@
+{
+    "crypto": {
+        "algorithm": "id-aes256-CCM",
+        "password": "en2#ItAGSr58$hp"
+    },
+    "salt": "2tU67qDMMB5$Wlu",
+    "jwt_secret": "sFc7Zw89U9KFJ"
+}

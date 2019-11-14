@@ -1,16 +1,8 @@
-const express = require('express');
-const router = express.Router();
-const bodyParser = require('body-parser');
-const helpers = require('./helpers');
-const checkAuth = require('../auth/checkAuth');
-const Event = require('./Event');
-const User = require('../user/User');
+'use strict';
 
-router.use(bodyParser.urlencoded({ extended: true }));
-router.use(bodyParser.json());
-router.use(checkAuth);
+const Event = require('../models/EventModel');
 
-router.post('/', (req, res) => {
+exports.create = (req, res) => {
     const event = {
         title: req.body.title,
         text: req.body.text,
@@ -20,7 +12,7 @@ router.post('/', (req, res) => {
 
     try {
         helpers.validateEvent(event);
-    } catch(e) {
+    } catch (e) {
         return res.status(400).send(e.message);
     }
 
@@ -33,12 +25,12 @@ router.post('/', (req, res) => {
         }
         res.status(200).send(event.id);
     });
-});
+};
 
-router.get('/', (req, res) => {
+exports.getEvents = (req, res) => {
     let filter = { id: req.decoded.id };
 
-    if(req.body.date) {
+    if (req.body.date) {
         filter.date = req.body.date
     }
 
@@ -51,9 +43,9 @@ router.get('/', (req, res) => {
         }
         res.status(200).send(events.docs);
     });
-});
+};
 
-router.put('/:id', (req, res) => {
+exports.updateEvent = (req, res) => {
     const event = {
         title: req.body.title,
         text: req.body.text,
@@ -62,11 +54,11 @@ router.put('/:id', (req, res) => {
 
     try {
         helpers.validateEvent(event);
-    } catch(e) {
+    } catch (e) {
         return res.status(400).send(e.message);
     }
 
-    Event.findByIdAndUpdate(req.params.id, req.body, {new: true}, (err, event) => {
+    Event.findByIdAndUpdate(req.params.id, req.body, { new: true }, (err, event) => {
         if (err) {
             return res.status(500).send({
                 success: false,
@@ -75,9 +67,9 @@ router.put('/:id', (req, res) => {
         }
         res.status(200).send(event);
     });
-});
+};
 
-router.delete('/:id', (req, res) => {
+exports.deleteEvent = (req, res) => {
     Event.findByIdAndRemove(req.params.id, (err, event) => {
         if (err) {
             return res.status(500).send({
@@ -85,8 +77,7 @@ router.delete('/:id', (req, res) => {
                 message: 'There was a problem deleting the event.'
             });
         }
-        res.status(200).send('Event '+ event.title +' was deleted.');
+        res.status(200).send('Event ' + event.title + ' was deleted.');
     });
-});
+};
 
-module.exports = router;
