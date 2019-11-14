@@ -1,4 +1,4 @@
-const url = 'mongodb://admin:test123@ds159634.mlab.com:59634/content-base';
+const url = 'mongodb://<user>:<password>.mlab.com:<number>/<dbname>';
 const mongoose = require('mongoose');
 
 const main = async () => {
