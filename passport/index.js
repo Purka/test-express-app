@@ -6,6 +6,13 @@ const bcrypt = require('../helpers/bcrypt');
 const User = require('../models/UserModel');
 
 const localStrategy = () => {
+    passport.serializeUser((user, cb) => {
+        cb(null, JSON.stringify(user));
+    });
+    passport.deserializeUser((obj, cb) => {
+        cb(null, JSON.parse(obj));
+    });
+
     passport.use(
         new LocalStrategy(
             {
