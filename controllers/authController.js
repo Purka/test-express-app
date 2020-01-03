@@ -46,7 +46,7 @@ exports.register = async (req, res) => {
     }
 }
 
-module.exports.login = async (req, res, next) => {
+exports.login = async (req, res, next) => {
     passport.authenticate("local", { session: false }, (err, user, info) => {
         if (err || !user) {
             return next({
